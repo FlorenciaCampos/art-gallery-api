@@ -1,12 +1,11 @@
+import { findArtworkById } from "../services/artworks.service.js";
+
 export const getArtworkById = (req, res) => {
-    const { id } = req.params;
-  
-    const mockArtwork = {
-      id: Number(id),
-      title: "Mock artwork",
-      technique: "Oil on canvas"
-    };
-  
-    res.json(mockArtwork);
-  };
+  const id = Number(req.params.id);
+
+  const artwork = findArtworkById(id);
+
+  res.json(artwork);
+};
+
   
