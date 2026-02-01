@@ -1,8 +1,7 @@
+import { getArtworkById } from "../models/artwork.model.js";
+
 export const findArtworkById = (id) => {
-    return {
-      id,
-      title: "Mock artwork",
-      technique: "Oil on canvas"
-    };
-  };
+  return getArtworkById(id);
+};
+
   
