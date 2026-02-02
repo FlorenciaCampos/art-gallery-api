@@ -8,13 +8,18 @@ export const getArtworkById = (req, res) => {
     return res.status(400).json({ message: "Invalid artwork id" });
   }
 
-  const artwork = findArtworkById(id);
+  try {
+    const artwork = findArtworkById(id);
 
-  // 404 - no existe
-  if (!artwork) {
-    return res.status(404).json({ message: "Artwork not found" });
+    // 404 - no existe
+    if (!artwork) {
+      return res.status(404).json({ message: "Artwork not found" });
+    }
+
+    // 200 - ok
+    res.json(artwork);
+  } catch (error) {
+    // 500 - error inesperado
+    res.status(500).json({ message: "Internal server error" });
   }
-
-  // 200 - ok
-  res.json(artwork);
 };
