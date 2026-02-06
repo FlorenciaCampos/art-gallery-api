@@ -1,6 +1,7 @@
 // controllers/artworks.controller.js
 
-import { findArtworkById } from "../services/artworks.service.js";
+import { findArtworkById, createArtworkService } from "../services/artworks.service.js";
+
 
 export const getArtworkById = async (req, res) => {
   const id = Number(req.params.id);
@@ -28,6 +29,34 @@ export const getArtworkById = async (req, res) => {
   } catch (error) {
     console.error(
       `[CONTROLLER ERROR] Error inesperado al obtener artwork ${id}`,
+      error
+    );
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+export const createArtwork = async (req, res) => {
+  try {
+    console.log("[CONTROLLER] POST /artworks");
+
+    const artworkData = req.body;
+
+    // Validación mínima a nivel HTTP
+    if (!artworkData || Object.keys(artworkData).length === 0) {
+      console.log("[CONTROLLER] Body vacío o inválido");
+      return res.status(400).json({ message: "Request body is required" });
+    }
+
+    // Delego la creación al service
+    const newArtwork = await createArtworkService(artworkData);
+
+    // Recurso creado
+    res.status(201).json(newArtwork);
+
+  } catch (error) {
+    console.error(
+      "[CONTROLLER ERROR] Error inesperado al crear artwork",
       error
     );
     res.status(500).json({ message: "Internal server error" });

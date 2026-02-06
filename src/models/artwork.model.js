@@ -1,6 +1,4 @@
-// models/artwork.model.js
 
-// Datos mockeados (simulan una base de datos)
 const artworks = [
     {
       id: 1,
@@ -14,16 +12,17 @@ const artworks = [
     }
   ];
   
+  
   export const getArtworkById = async (id) => {
     try {
-      // Simula query a DB
+     
       const artwork = artworks.find((artwork) => artwork.id === id);
   
-      // Si no existe, NO es error → devuelve null
+     
       return artwork || null;
   
     } catch (error) {
-      // Error técnico (DB caída, query fallida, etc.)
+     
       console.error(
         "[MODEL ERROR] Database error while fetching artwork",
         {
@@ -33,8 +32,41 @@ const artworks = [
           stack: error.stack
         }
       );
+      throw error;
+    }
+  };
+
+
+
+  export const createArtwork = async (artworkData) => {
+    try {
+      
+      const newId =
+        artworks.length > 0
+          ? artworks[artworks.length - 1].id + 1
+          : 1;
   
-      // 🔥 Propaga el error
+      const newArtwork = {
+        id: newId,
+        ...artworkData
+      };
+  
+   
+      artworks.push(newArtwork);
+  
+     
+      return newArtwork;
+  
+    } catch (error) {
+      
+      console.error(
+        "[MODEL ERROR] Database error while creating artwork",
+        {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        }
+      );
       throw error;
     }
   };

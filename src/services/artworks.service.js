@@ -1,6 +1,6 @@
 
 
-import { getArtworkById } from "../models/artwork.model.js";
+import { getArtworkById, createArtwork } from "../models/artwork.model.js";
 
 export const findArtworkById = async (id) => {
   try {
@@ -26,3 +26,33 @@ export const findArtworkById = async (id) => {
     throw error; 
   }
 };
+
+
+export const createArtworkService = async (artworkData) => {
+    try {
+      console.log("[SERVICE] Iniciando creación de artwork");
+  
+      const { title, technique } = artworkData;
+  
+      
+      if (!title || !technique) {
+        console.log("[SERVICE] Datos inválidos para crear artwork");
+        throw new Error("Title and technique are required");
+      }
+  
+      const newArtwork = await createArtwork({
+        title,
+        technique
+      });
+  
+      console.log("[SERVICE] Artwork creada correctamente");
+      return newArtwork;
+  
+    } catch (error) {
+      console.error(
+        "[SERVICE ERROR] Error al crear artwork",
+        error
+      );
+      throw error; 
+    }
+  };
