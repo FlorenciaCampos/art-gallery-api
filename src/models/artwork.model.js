@@ -70,4 +70,21 @@ const artworks = [
       throw error;
     }
   };
+
+  export const getAllArtworks = async () => {
+    try {
+      return artworks;
+    } catch (error) {
+      console.error(
+        "[MODEL ERROR] Database error while fetching artworks",
+        {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        }
+      );
+      throw error;
+    }
+  };
+  
   

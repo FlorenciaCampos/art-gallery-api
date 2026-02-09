@@ -1,6 +1,6 @@
 
 
-import { getArtworkById, createArtwork } from "../models/artwork.model.js";
+import { getArtworkById, createArtwork, getAllArtworks  } from "../models/artwork.model.js";
 
 export const findArtworkById = async (id) => {
   try {
@@ -54,5 +54,24 @@ export const createArtworkService = async (artworkData) => {
         error
       );
       throw error; 
+    }
+  };
+
+
+
+export const findAllArtworks = async () => {
+    try {
+      const artworks = await getAllArtworks();
+  
+      // Si no hay registros, es un estado válido → devolvemos array vacío
+      return artworks;
+  
+    } catch (error) {
+      // Error técnico (DB, conexión, query, etc.)
+      console.error(
+        "[SERVICE ERROR] Fallo al obtener la lista de artworks",
+        error
+      );
+      throw error;
     }
   };
