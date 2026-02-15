@@ -4,7 +4,7 @@ import { getArtworkById, createArtwork, getAllArtworks  } from "../models/artwor
 
 export const findArtworkById = async (id) => {
   try {
-    console.log(`[SERVICE] Buscando artwork con id ${id}`);
+    
 
     const artwork = await getArtworkById(id);
 
@@ -14,7 +14,6 @@ export const findArtworkById = async (id) => {
       return null;
     }
 
-    console.log(`[SERVICE] Artwork encontrado`);
     return artwork;
 
   } catch (error) {
@@ -30,7 +29,7 @@ export const findArtworkById = async (id) => {
 
 export const createArtworkService = async (artworkData) => {
     try {
-      console.log("[SERVICE] Iniciando creación de artwork");
+      
   
       const { title, technique } = artworkData;
   
@@ -45,7 +44,7 @@ export const createArtworkService = async (artworkData) => {
         technique
       });
   
-      console.log("[SERVICE] Artwork creada correctamente");
+    
       return newArtwork;
   
     } catch (error) {
