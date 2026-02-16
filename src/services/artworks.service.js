@@ -1,6 +1,6 @@
 
 
-import { getArtworkById, createArtwork, getAllArtworks  } from "../models/artwork.model.js";
+import { getArtworkById, createArtwork, getAllArtworks, deleteArtworkById  } from "../models/artwork.model.js";
 
 export const findArtworkById = async (id) => {
   try {
@@ -71,6 +71,14 @@ export const findAllArtworks = async () => {
         "[SERVICE ERROR] Fallo al obtener la lista de artworks",
         error
       );
+      throw error;
+    }
+  };
+
+  export const deleteArtworkByIdService = async (id) => {
+    try {
+      return await deleteArtworkById(id);
+    } catch (error) {
       throw error;
     }
   };

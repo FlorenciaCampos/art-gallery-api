@@ -1,5 +1,5 @@
 
-import { findArtworkById, createArtworkService,findAllArtworks  } from "../services/artworks.service.js";
+import { findArtworkById, createArtworkService,findAllArtworks, deleteArtworkById  } from "../services/artworks.service.js";
 
 
 export const getArtworkById = async (req, res) => {
@@ -73,5 +73,30 @@ export const getAllArtworks = async (req, res) => {
       error
     );
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteArtwork = async (req, res) => {
+  const id = Number(req.params.id);
+
+  if (isNaN(id)) {
+    return res.status(400).json({ message: "Invalid artwork id" });
+  }
+
+  try {
+    const deleted = await deleteArtworkById(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Artwork not found" });
+    }
+
+    return res.status(200).json(deleted);
+
+  } catch (error) {
+    console.error(
+      `[CONTROLLER ERROR] Error inesperado al eliminar artwork ${id}`,
+      error
+    );
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -86,5 +86,22 @@ const artworks = [
       throw error;
     }
   };
+
+  export const deleteArtworkById = async (id) => {
+    try {
+      const index = artworks.findIndex(artwork => artwork.id === id);
   
+      if (index === -1) {
+        return null;
+      }
+  
+      const deletedArtwork = artworks[index];
+      artworks.splice(index, 1);
+  
+      return deletedArtwork;
+  
+    } catch (error) {
+      throw error;
+    }
+  };
   

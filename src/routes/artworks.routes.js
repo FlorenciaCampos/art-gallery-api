@@ -6,5 +6,7 @@ const router = Router();
 router.get("/:id", getArtworkById);
 router.post("/", createArtwork);
 router.get("/", getAllArtworks);
+router.delete("/:id", deleteArtwork);
+
 
 export default router;
