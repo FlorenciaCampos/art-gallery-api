@@ -1,49 +1,50 @@
-const artworks = [
-  {
-    id: 1,
-    title: "Obra 1",
-    technique: "Óleo sobre tela"
-  },
-  {
-    id: 2,
-    title: "Obra 2",
-    technique: "Acuarela"
-  }
-];
+import pool from "../database/db.js";
 
 export const getArtworkById = async (id) => {
-  const artwork = artworks.find(a => a.id === id);
-  return artwork || null;
+  const query = `
+    SELECT * FROM artworks
+    WHERE id = $1;
+  `;
+
+  const values = [id];
+  const result = await pool.query(query, values);
+
+  return result.rows[0] || null;
 };
 
-export const getAllArtworks = async () => {
-  return artworks;
-};
 
-export const createArtwork = async (artworkData) => {
-  const newId =
-    artworks.length > 0
-      ? artworks[artworks.length - 1].id + 1
-      : 1;
+/* =========================
+   export const getAllArtworks = async () => {
+  const query = `
+    SELECT * FROM artworks
+  `
+}; 
+========================= */
 
-  const newArtwork = {
-    id: newId,
-    ...artworkData
-  };
 
-  artworks.push(newArtwork);
-  return newArtwork;
+export const createArtwork = async ({ title, technique }) => {
+  const query = `
+    INSERT INTO artworks (title, technique)
+    VALUES ($1, $2)
+    RETURNING *;
+  `;
+
+  const values = [title, technique];
+
+  const result = await pool.query(query, values);
+
+  return result.rows[0];
 };
 
 export const deleteArtworkById = async (id) => {
-  const index = artworks.findIndex(a => a.id === id);
+  const query = `
+    DELETE FROM artworks
+    WHERE id = $1
+    RETURNING *;
+  `;
 
-  if (index === -1) {
-    return null;
-  }
+  const values = [id];
+  const result = await pool.query(query, values);
 
-  const deletedArtwork = artworks[index];
-  artworks.splice(index, 1);
-
-  return deletedArtwork;
+  return result.rows[0] || null;
 };

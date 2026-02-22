@@ -1,7 +1,6 @@
 import {
   findArtworkById,
   createArtworkService,
-  findAllArtworks,
   deleteArtworkById
 } from "../services/artworks.service.js";
 
@@ -35,8 +34,7 @@ export const getArtworkById = async (req, res) => {
 
 /* =========================
    GET all
-========================= */
-export const getAllArtworks = async (req, res) => {
+   export const getAllArtworks = async (req, res) => {
   try {
     const artworks = await findAllArtworks();
     return res.status(200).json(artworks);
@@ -49,6 +47,8 @@ export const getAllArtworks = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+========================= */
+
 
 /* =========================
    POST
