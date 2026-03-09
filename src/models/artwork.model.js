@@ -48,3 +48,19 @@ export const deleteArtworkById = async (id) => {
 
   return result.rows[0] || null;
 };
+
+export const updateArtworkById = async (id, { title, technique }) => {
+  const query = `
+    UPDATE artworks
+    SET title = $1,
+        technique = $2
+    WHERE id = $3
+    RETURNING *;
+  `;
+
+  const values = [title, technique, id];
+
+  const result = await pool.query(query, values);
+
+  return result.rows[0] || null;
+};
